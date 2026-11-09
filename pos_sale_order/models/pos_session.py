@@ -264,8 +264,10 @@ class PosSession(models.Model):
                 orders = orders.with_context(
                     default_journal_id=self.config_id.journal_id.id
                 )
+
+            # (final=True) is pass in order to create credit notes
+            # for invoiced cancelled orders
             orders._create_invoices(final=True)
-            # Create credit notes for invoiced cancelled orders
             orders.invoice_ids.filtered(lambda s: s.state == "draft").action_post()
         self._create_bank_statement_line_and_reconcile()
         return True
