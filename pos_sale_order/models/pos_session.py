@@ -196,7 +196,7 @@ class PosSession(models.Model):
             statement = self.statement_ids.filtered(
                 lambda s: s.journal_id == method.cash_journal_id
             )
-            if not statement and method.cash_journal_id:
+            if not statement:
                 statement = self.env["account.bank.statement"].create(
                     {
                         "journal_id": method.cash_journal_id.id,
@@ -205,9 +205,6 @@ class PosSession(models.Model):
                         "name": self.name,
                     }
                 )
-            if not statement:
-                # Should we raise?
-                continue
             for record_ref, payments in payment_per_key.items():
                 if not float_is_zero(
                     sum(payments.mapped("amount")),

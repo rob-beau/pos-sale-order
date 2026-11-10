@@ -9,7 +9,10 @@ class PosPaymentMethod(models.Model):
     _inherit = "pos.payment.method"
 
     cash_journal_id = fields.Many2one(
-        string="Journal", domain=None, help="Journal used for generating payment"
+        string="Journal",
+        domain=None,
+        help="Journal used for generating payment",
+        required=True,
     )
     split_transactions = fields.Boolean(
         help="If ticked, each payment will generate a separated journal item."

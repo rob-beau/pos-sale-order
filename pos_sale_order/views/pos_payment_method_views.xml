@@ -7,7 +7,6 @@
     <field name="arch" type="xml">
         <field name="cash_journal_id" position="attributes">
             <attribute name="attrs" />
-            <attribute name="required">True</attribute>
         </field>
         <field name="split_transactions" position="attributes">
             <attribute name="groups" />
