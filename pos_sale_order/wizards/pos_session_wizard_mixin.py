@@ -32,6 +32,15 @@ class PosSessionWizardMixin(models.AbstractModel):
             raise UserError(
                 _("There is no session opened with payment method, please open one")
             )
+        elif len(session) > 1:
+            raise UserError(
+                _(
+                    "You have several active sessions. "
+                    "Please close any unnecessary sessions before proceeding. "
+                    "List of open sessions: \n- %s"
+                )
+                % "\n- ".join(session.mapped("name"))
+            )
         return session
 
     def _prepare_wizard(self, sale, payment_methods, default_method):
